@@ -1,0 +1,175 @@
+/* ==========================================================================
+   CSS VARIABLES & DESIGN TOKENS (APPLE HIG INSPIRED)
+   Agenda Semanal - Academic Planner
+   ========================================================================== */
+
+:root {
+  /* Apple System Palette - Accent (Cold Indigo/Violet) */
+  --color-accent: #5E5CE6;
+  --color-accent-hover: #4d4acb;
+  --color-accent-active: #3e3bb5;
+  --color-accent-subtle: rgba(94, 92, 230, 0.15);
+  --color-accent-subtle-hover: rgba(94, 92, 230, 0.25);
+  --color-accent-border: rgba(94, 92, 230, 0.35);
+  --color-accent-contrast: #ffffff;
+
+  /* Apple System Colors */
+  --color-success: #30D158;
+  --color-success-subtle: rgba(48, 209, 88, 0.15);
+  --color-success-border: rgba(48, 209, 88, 0.35);
+  --color-warning: #FF9F0A;
+  --color-warning-subtle: rgba(255, 159, 10, 0.15);
+  --color-warning-border: rgba(255, 159, 10, 0.35);
+  --color-danger: #FF453A;
+  --color-danger-subtle: rgba(255, 69, 58, 0.15);
+  --color-danger-border: rgba(255, 69, 58, 0.35);
+  --color-info: #0A84FF;
+  --color-info-subtle: rgba(10, 132, 255, 0.15);
+  --color-info-border: rgba(10, 132, 255, 0.35);
+
+  /* Academic Status Colors */
+  --status-promoted: #30D158;
+  --status-approved: #0A84FF;
+  --status-failed: #FF453A;
+
+  /* Event Type Tag Colors */
+  --event-parcial: #FF375F;
+  --event-tp: #BF5AF2;
+  --event-entrega: #FF9F0A;
+  --event-final: #FF453A;
+  --event-recuperatorio: #FFD60A;
+  --event-otro: #8E8E93;
+  --event-clase: #5E5CE6;
+
+  /* Typography (Inter / Apple System Font) */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.8125rem;  /* 13px */
+  --font-size-md: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Apple Squircle Geometry */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-2xl: 26px;
+  --radius-full: 9999px;
+
+  --nav-height: 64px;
+  --header-height: 56px;
+  
+  /* Calendar Geometry */
+  --cal-hour-height: 54px;
+  --cal-start-hour: 6;
+  --cal-end-hour: 24;
+  --cal-total-hours: 18;
+  --cal-total-minutes: 1080;
+  --cal-hour-col-width: 48px;
+  --cal-header-height: 48px;
+
+  /* Safe Area Insets for Mobile / WebView */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+
+  /* Transitions */
+  --transition-fast: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-normal: 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-slow: 340ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Z-Indices */
+  --z-base: 1;
+  --z-sticky-hour: 15;
+  --z-sticky-header: 20;
+  --z-sticky-corner: 25;
+  --z-now-line: 30;
+  --z-nav: 40;
+  --z-modal-backdrop: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+}
+
+/* ==========================================================================
+   THEME: DARK (APPLE OBSIDIAN / ZINC)
+   ========================================================================== */
+[data-theme="dark"],
+:root:not([data-theme="light"]) {
+  color-scheme: dark;
+  
+  --bg-app: #000000;
+  --bg-primary: #0a0a0c;
+  --bg-surface: #1c1c1e;
+  --bg-surface-raised: #2c2c2e;
+  --bg-surface-hover: #3a3a3c;
+  --bg-input: #1c1c1e;
+  --bg-input-focus: #2c2c2e;
+
+  --text-primary: #f5f5f7;
+  --text-secondary: #8e8e93;
+  --text-muted: #636366;
+  --text-disabled: #3a3a3c;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.24);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.8);
+  --shadow-sheet: 0 -8px 32px rgba(0, 0, 0, 0.85);
+
+  --glass-bg: rgba(28, 28, 30, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.1);
+
+  --grid-line-color: rgba(255, 255, 255, 0.06);
+  --grid-line-hour: rgba(255, 255, 255, 0.08);
+  --grid-current-day-bg: rgba(94, 92, 230, 0.04);
+}
+
+/* ==========================================================================
+   THEME: LIGHT (APPLE CRISP SYSTEM)
+   ========================================================================== */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-app: #f2f2f7;
+  --bg-primary: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-surface-raised: #f2f2f7;
+  --bg-surface-hover: #e5e5ea;
+  --bg-input: #e5e5ea;
+  --bg-input-focus: #ffffff;
+
+  --text-primary: #000000;
+  --text-secondary: #6c6c70;
+  --text-muted: #8e8e93;
+  --text-disabled: #c7c7cc;
+
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-medium: rgba(0, 0, 0, 0.12);
+  --border-strong: rgba(0, 0, 0, 0.2);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.09);
+  --shadow-sheet: 0 -8px 30px rgba(0, 0, 0, 0.08);
+
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.06);
+
+  --grid-line-color: rgba(0, 0, 0, 0.05);
+  --grid-line-hour: rgba(0, 0, 0, 0.08);
+  --grid-current-day-bg: rgba(94, 92, 230, 0.03);
+}

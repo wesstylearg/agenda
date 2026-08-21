@@ -1,0 +1,569 @@
+/* ==========================================================================
+   COMPONENTS: APPLE HIG BUTTONS, CARDS, BADGES, PILLS, NOTICES & ICONS
+   Agenda Semanal - Academic Planner
+   ========================================================================== */
+
+/* SVG Icons */
+.svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  stroke: currentColor;
+}
+
+/* Header Top Action Buttons with Badges */
+.header-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-icon-btn {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.header-icon-btn:hover {
+  background-color: var(--bg-surface-raised);
+  border-color: var(--border-medium);
+  transform: scale(1.04);
+}
+
+.header-icon-btn:active {
+  transform: scale(0.94);
+}
+
+.header-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-danger);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--bg-app);
+}
+
+/* Buttons (Apple Style) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  padding: 10px 16px;
+  min-height: 42px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  text-align: center;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+  box-shadow: 0 2px 10px rgba(94, 92, 230, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-primary:active {
+  background-color: var(--color-accent-active);
+  transform: scale(0.97);
+}
+
+.btn-secondary {
+  background-color: var(--bg-surface-raised);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-medium);
+}
+
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background-color: #e03b30;
+}
+
+.btn-ghost-danger {
+  background-color: transparent;
+  color: var(--color-danger);
+}
+
+.btn-ghost-danger:hover {
+  background-color: var(--color-danger-subtle);
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  padding: 0;
+  border-radius: var(--radius-full);
+}
+
+.btn-sm {
+  min-height: 32px;
+  padding: 5px 12px;
+  font-size: var(--font-size-xs);
+  border-radius: var(--radius-sm);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* Cards (Apple Grouped Background Style) */
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.card-clickable {
+  cursor: pointer;
+}
+
+.card-clickable:hover {
+  border-color: var(--border-medium);
+  background-color: var(--bg-surface-raised);
+}
+
+.card-clickable:active {
+  transform: scale(0.985);
+}
+
+/* Badges & Tags (Translucent Tinted) */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-xs);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.badge-parcial { background-color: rgba(255, 55, 95, 0.15); color: #ff375f; border: 1px solid rgba(255, 55, 95, 0.25); }
+.badge-tp { background-color: rgba(191, 90, 242, 0.15); color: #bf5af2; border: 1px solid rgba(191, 90, 242, 0.25); }
+.badge-entrega { background-color: rgba(255, 159, 10, 0.15); color: #ff9f0a; border: 1px solid rgba(255, 159, 10, 0.25); }
+.badge-final { background-color: rgba(255, 69, 58, 0.15); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); }
+.badge-recuperatorio { background-color: rgba(255, 214, 10, 0.15); color: #ffd60a; border: 1px solid rgba(255, 214, 10, 0.25); }
+.badge-otro { background-color: rgba(142, 142, 147, 0.15); color: #8e8e93; border: 1px solid rgba(142, 142, 147, 0.25); }
+
+/* Academic Status Pills */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.status-pill.promoted {
+  background-color: var(--color-success-subtle);
+  color: var(--color-success);
+  border: 1px solid var(--color-success-border);
+}
+
+.status-pill.approved {
+  background-color: var(--color-info-subtle);
+  color: var(--color-info);
+  border: 1px solid var(--color-info-border);
+}
+
+.status-pill.failed {
+  background-color: var(--color-danger-subtle);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger-border);
+}
+
+.status-pill.pending {
+  background-color: rgba(142, 142, 147, 0.12);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Priority Indicators */
+.priority-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+}
+
+.priority-high { background-color: var(--color-danger); box-shadow: 0 0 6px rgba(255, 69, 58, 0.4); }
+.priority-med { background-color: var(--color-warning); }
+.priority-low { background-color: var(--color-info); }
+
+/* Segmented Controls (iOS Tab Switcher) */
+.segmented-control {
+  display: flex;
+  background-color: var(--bg-surface-raised);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  width: 100%;
+}
+
+.segmented-btn {
+  flex: 1;
+  text-align: center;
+  padding: 7px 10px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  border-radius: var(--radius-xs);
+  transition: all var(--transition-fast);
+  background: transparent;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.segmented-btn.active {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Notice Banners (Clean Apple Alert Cards) */
+.notice-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 8px;
+  transition: transform var(--transition-fast);
+  cursor: pointer;
+}
+
+.notice-banner.urgent {
+  background-color: rgba(255, 69, 58, 0.08);
+  border-color: rgba(255, 69, 58, 0.25);
+}
+
+.notice-banner.warning {
+  background-color: rgba(255, 159, 10, 0.08);
+  border-color: rgba(255, 159, 10, 0.25);
+}
+
+.notice-banner.info {
+  background-color: rgba(94, 92, 230, 0.08);
+  border-color: rgba(94, 92, 230, 0.25);
+}
+
+.notice-icon-wrap {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notice-banner.urgent .notice-icon-wrap { background: rgba(255, 69, 58, 0.15); color: var(--color-danger); }
+.notice-banner.warning .notice-icon-wrap { background: rgba(255, 159, 10, 0.15); color: var(--color-warning); }
+.notice-banner.info .notice-icon-wrap { background: rgba(94, 92, 230, 0.15); color: var(--color-accent); }
+
+.notice-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notice-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.notice-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+/* Apple Reminders Style Circular Checkbox */
+.custom-checkbox {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background-color: transparent;
+  color: transparent;
+  padding: 0;
+}
+
+.custom-checkbox:hover {
+  border-color: var(--color-accent);
+}
+
+.custom-checkbox.checked {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+  color: #ffffff;
+}
+
+.custom-checkbox.in-progress {
+  border-color: var(--color-warning);
+  background-color: rgba(255, 159, 10, 0.15);
+  color: var(--color-warning);
+}
+
+/* ==========================================================================
+   MINI CALENDAR / DAY TIMELINE (INICIO)
+   ========================================================================== */
+
+.mini-day-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mini-timeline-card {
+  display: flex;
+  align-items: stretch;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.mini-timeline-card:hover {
+  background-color: var(--bg-surface-raised);
+  border-color: var(--border-medium);
+  transform: translateY(-1px);
+}
+
+.mini-timeline-card:active {
+  transform: scale(0.985);
+}
+
+.mini-timeline-color-bar {
+  width: 4px;
+  flex-shrink: 0;
+}
+
+.mini-timeline-body {
+  flex: 1;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.mini-timeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mini-timeline-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mini-timeline-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.mini-timeline-meta .meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Stats Cards Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.stat-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+}
+
+.stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+}
+
+/* Empty State (Apple Minimalism) */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 44px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-surface-raised);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  color: var(--text-muted);
+}
+
+.empty-state-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.empty-state-desc {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  max-width: 280px;
+  margin-bottom: 16px;
+}
+
+/* Toast Container & Toasts */
+#toast-container {
+  position: fixed;
+  bottom: calc(var(--nav-height) + var(--safe-bottom) + 16px);
+  left: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  z-index: var(--z-toast);
+}
+
+.toast {
+  padding: 10px 16px;
+  background-color: var(--bg-surface-raised);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  transition: all var(--transition-normal);
+  pointer-events: auto;
+  max-width: 380px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(20px);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.toast.toast-success {
+  border-color: var(--color-success-border);
+  color: var(--color-success);
+}
+
+.toast.toast-danger {
+  border-color: var(--color-danger-border);
+  color: var(--color-danger);
+}

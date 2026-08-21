@@ -1,0 +1,143 @@
+/* ==========================================================================
+   MODALS & MOBILE BOTTOM SHEETS
+   Agenda Semanal
+   ========================================================================== */
+
+/* Modal Container (Fixed Overlay) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: var(--z-modal-backdrop);
+  display: flex;
+  align-items: flex-end; /* Bottom sheet by default on mobile */
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Bottom Sheet / Modal Dialog */
+.modal-dialog {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-bottom: none;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: var(--shadow-sheet);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  max-height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform var(--transition-slow);
+  z-index: var(--z-modal);
+  padding-bottom: max(16px, var(--safe-bottom));
+  overflow: hidden;
+}
+
+.modal-overlay.active .modal-dialog {
+  transform: translateY(0);
+}
+
+/* Drag / Handle Bar (Mobile Visual) */
+.modal-handle-bar {
+  width: 36px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background-color: var(--border-strong);
+  margin: 10px auto 4px auto;
+  flex-shrink: 0;
+}
+
+/* Modal Header */
+.modal-header {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  background-color: var(--bg-surface-raised);
+  border: 1px solid var(--border-subtle);
+  font-size: 16px;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-surface-hover);
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 18px 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+/* Modal Footer Actions */
+.modal-footer {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  background-color: var(--bg-surface);
+}
+
+/* Desktop Modal Centering */
+@media (min-width: 640px) {
+  .modal-overlay {
+    align-items: center;
+    padding: 24px;
+  }
+
+  .modal-dialog {
+    border-radius: var(--radius-xl);
+    border-bottom: 1px solid var(--border-medium);
+    transform: scale(0.95) translateY(10px);
+    max-height: 85vh;
+    padding-bottom: 0;
+  }
+
+  .modal-overlay.active .modal-dialog {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-handle-bar {
+    display: none;
+  }
+}

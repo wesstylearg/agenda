@@ -1,0 +1,72 @@
+/* ==========================================================================
+   RESPONSIVE ADJUSTMENTS, WEBVIEW ENHANCEMENTS & ACCESSIBILITY
+   Agenda Semanal
+   ========================================================================== */
+
+/* Android WebView & Mobile Touch Optimizations */
+@supports (-webkit-touch-callout: none) {
+  /* iOS / Mobile Safari / WebView specific */
+  body {
+    -webkit-user-select: none;
+  }
+  input, textarea {
+    -webkit-user-select: text;
+  }
+}
+
+/* Prevent unwanted bounce/pull-to-refresh inside webview if needed */
+.week-grid-scroller,
+.view-content,
+.modal-body {
+  overscroll-behavior: contain;
+}
+
+/* Tablet & Desktop Adjustments (min-width: 768px) */
+@media (min-width: 768px) {
+  :root {
+    --nav-height: 68px;
+    --cal-hour-col-width: 54px;
+    --cal-hour-height: 58px;
+  }
+
+  .view-content {
+    padding: 24px 28px calc(var(--nav-height) + var(--safe-bottom) + 32px) 28px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .bottom-nav {
+    max-width: 500px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: var(--radius-xl);
+    bottom: 16px;
+    border: 1px solid var(--border-medium);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .view-content {
+    padding-bottom: calc(var(--nav-height) + 40px);
+  }
+}
+
+/* Large Desktop (min-width: 1024px) */
+@media (min-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Reduced Motion (Accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

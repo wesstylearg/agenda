@@ -1,0 +1,526 @@
+/* ==========================================================================
+   CALENDAR SYSTEM: 7-DAY WEEKLY GRID, MONTHLY & CUATRIMESTRAL VIEWS
+   Agenda Semanal
+   ========================================================================== */
+
+/* Calendar View Container */
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-app);
+}
+
+/* Calendar Sub-view Switcher Header */
+.calendar-top-bar {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--bg-app);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: var(--z-sticky-header);
+}
+
+.calendar-nav-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.calendar-period-label {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  text-align: center;
+  flex: 1;
+}
+
+.calendar-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   WEEKLY 7-DAY GRID (CORE ENGINE)
+   - 7 real day columns
+   - Mobile: 3 visible days with scroll snap
+   - Sticky hour column on the left
+   - Sticky day header on top
+   - Scrollable vertically (06:00 to 00:00) and horizontally simultaneously
+   ========================================================================== */
+
+.week-grid-scroller {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-app);
+  scrollbar-width: thin;
+}
+
+/* Grid Table-like Layout */
+.week-grid {
+  display: flex;
+  min-width: 100%;
+  /* 7 columns. On mobile, each column is calc((100vw - 48px) / 3) so 3 columns fit exactly */
+  width: calc(var(--cal-hour-col-width) + ((100vw - var(--cal-hour-col-width)) / 3) * 7);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .week-grid-scroller {
+    scroll-snap-type: none; /* Free scroll or fit all 7 on larger screens */
+  }
+  .week-grid {
+    width: 100%;
+    min-width: 700px;
+  }
+}
+
+/* --- Sticky Time / Hours Column --- */
+.time-col {
+  flex: 0 0 var(--cal-hour-col-width);
+  width: var(--cal-hour-col-width);
+  position: sticky;
+  left: 0;
+  z-index: var(--z-sticky-hour);
+  background-color: var(--bg-app);
+  border-right: 1px solid var(--border-subtle);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.time-col-corner {
+  position: sticky;
+  top: 0;
+  height: var(--cal-header-height);
+  background-color: var(--bg-app);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: var(--z-sticky-corner);
+}
+
+.time-slot-label {
+  height: var(--cal-hour-height);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 4px;
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  border-bottom: 1px solid transparent;
+  transform: translateY(-8px);
+}
+
+/* --- Days Container --- */
+.days-container {
+  flex: 1;
+  display: flex;
+  position: relative;
+}
+
+/* Individual Day Column */
+.day-col {
+  flex: 0 0 calc((100vw - var(--cal-hour-col-width)) / 3);
+  min-width: calc((100vw - var(--cal-hour-col-width)) / 3);
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--grid-line-color);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .day-col {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+/* Day Header (Sticky Top) */
+.day-header {
+  position: sticky;
+  top: 0;
+  height: var(--cal-header-height);
+  background-color: var(--bg-app);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-sticky-header);
+  padding: 4px 2px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.day-header-name {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.day-header-number {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  transition: all var(--transition-fast);
+}
+
+/* Today Header Highlight */
+.day-col.is-today {
+  background-color: var(--grid-current-day-bg);
+}
+
+.day-col.is-today .day-header-name {
+  color: var(--color-accent);
+}
+
+.day-col.is-today .day-header-number {
+  background-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+  box-shadow: 0 2px 8px rgba(124, 107, 239, 0.4);
+}
+
+/* Day Body Grid Lines (18 hours) */
+.day-body {
+  position: relative;
+  height: calc(var(--cal-hour-height) * var(--cal-total-hours));
+  width: 100%;
+}
+
+.day-hour-grid-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--grid-line-hour);
+  pointer-events: none;
+}
+
+/* Current Time Indicator Line */
+.cal-now-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  z-index: var(--z-now-line);
+  pointer-events: none;
+}
+
+.cal-now-indicator::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-accent);
+  box-shadow: 0 0 6px rgba(124, 107, 239, 0.8);
+}
+
+/* ==========================================================================
+   CALENDAR EVENT & CLASS CHIPS
+   Proportional absolute placement with overlapping collision columns
+   ========================================================================== */
+
+.cal-chip {
+  position: absolute;
+  border-radius: var(--radius-sm);
+  padding: 4px 6px;
+  font-size: 11px;
+  line-height: 1.2;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  z-index: var(--z-base);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  user-select: none;
+}
+
+.cal-chip:hover {
+  z-index: calc(var(--z-base) + 5);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.cal-chip:active {
+  transform: scale(0.97);
+}
+
+/* Class Chip Style (Recurring Subject Schedule) */
+.cal-chip.chip-class {
+  background-color: var(--bg-surface-raised);
+  border-left: 3.5px solid var(--chip-accent-color, var(--color-accent));
+}
+
+/* Event Chip Styles (General Events) */
+.cal-chip.chip-event {
+  background-color: var(--chip-bg-color, var(--bg-surface-raised));
+  border-left: 3.5px solid var(--chip-accent-color, var(--color-accent));
+}
+
+/* Exam Chip Styles (Parcial, Final, Recuperatorio - Highly Differentiated) */
+.cal-chip.chip-exam {
+  z-index: calc(var(--z-base) + 3);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.cal-chip.chip-parcial {
+  background: linear-gradient(135deg, rgba(255, 55, 95, 0.28) 0%, rgba(255, 55, 95, 0.14) 100%) !important;
+  border-left: 4.5px solid #ff375f !important;
+}
+
+.cal-chip.chip-final {
+  background: linear-gradient(135deg, rgba(255, 69, 58, 0.34) 0%, rgba(255, 69, 58, 0.16) 100%) !important;
+  border-left: 4.5px solid #ff453a !important;
+  border-top: 1px solid rgba(255, 69, 58, 0.4) !important;
+}
+
+.cal-chip.chip-recuperatorio {
+  background: linear-gradient(135deg, rgba(255, 214, 10, 0.25) 0%, rgba(255, 214, 10, 0.12) 100%) !important;
+  border-left: 4.5px solid #ffd60a !important;
+}
+
+.cal-chip-title {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+
+.cal-chip.chip-exam .cal-chip-title {
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
+}
+
+.cal-chip-time {
+  font-size: 10px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+.cal-chip-room {
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+.cal-chip-type-tag {
+  align-self: flex-start;
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: var(--radius-xs);
+  margin-bottom: 2px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+/* Compact Chip for small durations (< 45min) */
+.cal-chip.chip-compact {
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+}
+
+.cal-chip.chip-compact .cal-chip-title {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   MONTHLY CALENDAR VIEW
+   ========================================================================== */
+
+.month-view-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  padding: 12px 16px calc(var(--nav-height) + var(--safe-bottom) + 16px) 16px;
+}
+
+.month-weekdays-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 6px;
+}
+
+.month-weekday-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.month-matrix {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.month-day-cell {
+  min-height: 56px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 4px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.month-day-cell:hover {
+  background-color: var(--bg-surface-raised);
+  border-color: var(--border-medium);
+}
+
+.month-day-cell.other-month {
+  opacity: 0.35;
+}
+
+.month-day-cell.has-exam {
+  border-color: rgba(255, 55, 95, 0.4);
+  background-color: rgba(255, 55, 95, 0.05);
+}
+
+.month-day-cell.has-final {
+  border-color: rgba(255, 69, 58, 0.5);
+  background-color: rgba(255, 69, 58, 0.08);
+}
+
+.month-day-cell.is-selected {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent-subtle);
+}
+
+.month-day-cell.is-today .month-day-number {
+  background-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border-radius: var(--radius-full);
+}
+
+.month-day-number {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.month-day-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.month-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+}
+
+.month-dot.dot-exam {
+  width: 6px;
+  height: 6px;
+  box-shadow: 0 0 5px currentColor;
+}
+
+.month-agenda-panel {
+  margin-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 16px;
+}
+
+/* ==========================================================================
+   CUATRIMESTRAL / SEMESTER VIEW (TIMELINE OF MILESTONES)
+   ========================================================================== */
+
+.term-view-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  padding: 12px 16px calc(var(--nav-height) + var(--safe-bottom) + 16px) 16px;
+  gap: 20px;
+}
+
+.term-month-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.term-month-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.term-month-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--border-subtle);
+}
+
+.term-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

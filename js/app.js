@@ -42,6 +42,9 @@ export const App = {
     // 6. Android WebView & Mobile Viewport adjustments
     this.setupViewportFixes();
 
+    // 7. Register Service Worker for PWA (PWABuilder & Offline)
+    this.registerServiceWorker();
+
     console.log('Agenda Semanal initialized successfully.');
   },
 
@@ -90,6 +93,23 @@ export const App = {
       setTimeout(setAppHeight, 150);
     });
     setAppHeight();
+  },
+
+  /**
+   * Register Service Worker for offline capability & PWA installability
+   */
+  registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((registration) => {
+            console.log('PWA Service Worker registered with scope:', registration.scope);
+          })
+          .catch((error) => {
+            console.warn('PWA Service Worker registration failed:', error);
+          });
+      });
+    }
   }
 };
 
